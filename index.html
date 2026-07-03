@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TratorTech Pro — Diagnóstico Inteligente de Tratores</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Trator<span>Tech</span> Pro</h1>
+            <p>Sistema Inteligente de Diagnóstico de Falhas em Tratores e Máquinas Agrícolas</p>
+        </div>
+    </header>
+
+    <div class="search-hero">
+        <div class="search-title">🔍 Descreva o Problema do Seu Trator</div>
+        
+        <form class="search-form" id="searchForm" onsubmit="runDiagnosis(event)">
+            <div class="form-group">
+                <label for="brand">Marca do Trator *</label>
+                <input type="text" id="brand" placeholder="Ex: New Holland, Case IH, Kubota..." required>
+                <small style="color: #999; font-size: 0.8rem;">Digite a marca (não precisa estar na lista)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Modelo *</label>
+                <input type="text" id="model" placeholder="Ex: T7, MF 255, LS U60..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Ano de Fabricação</label>
+                <input type="number" id="year" placeholder="Ex: 2020" min="1980" max="2099">
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="problem">Descreva o Problema *</label>
+                <textarea id="problem" placeholder="Ex: O trator não liga de manhã, motor gira mas não pega. Ou: Hidráulico não levanta os implementos com força..." required></textarea>
+            </div>
+
+            <div style="grid-column: 1 / -1;">
+                <div class="search-buttons">
+                    <button type="submit" class="btn btn-primary">🔍 Analisar Problema</button>
+                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <main>
+        <div class="results-container" id="resultsContainer">
+            <div class="section">
+                <h2 class="section-title">📋 Resultado da Análise</h2>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Marcas Suportadas</h2>
+            <p style="text-align: center; color: var(--muted); margin-bottom: 2rem;">O sistema funciona com qualquer marca de trator. Abaixo estão as principais:</p>
+            <div class="brands-grid" id="brandsGrid"></div>
+        </div>
+
+        <div class="section">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('about')">ℹ️ Sobre o Sistema</button>
+                <button class="tab-btn" onclick="switchTab('faq')">❓ Perguntas Frequentes</button>
+                <button class="tab-btn" onclick="switchTab('tips')">💡 Dicas de Manutenção</button>
+            </div>
+
+            <div class="tab-content active" id="tab-about">
+                <div class="result-card">
+                    <h3>Como Funciona o TratorTech Pro?</h3>
+                    <p>O TratorTech Pro é um sistema inteligente de diagnóstico que analisa as informações fornecidas sobre seu trator e o problema relatado para oferecer soluções técnicas precisas.</p>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>Análise Inteligente:</strong> O sistema processa a marca, modelo, ano e descrição do problema para fornecer diagnósticos relevantes.</li>
+                        <li><strong>Cobertura Universal:</strong> Funciona com qualquer marca de trator, mesmo que não esteja na lista inicial.</li>
+                        <li><strong>Soluções Práticas:</strong> Cada diagnóstico inclui causas prováveis, procedimentos de solução e recomendações de urgência.</li>
+                        <li><strong>Recursos Multimídia:</strong> Acesso a vídeos tutoriais e manuais técnicos relacionados ao problema identificado.</li>
+                        <li><strong>Dicas Específicas por Marca:</strong> Quando disponível, o sistema oferece dicas técnicas específicas da marca.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-faq">
+                <div class="result-card">
+                    <h3>❓ Perguntas Frequentes</h3>
+                    <p><strong>P: Preciso digitar exatamente o nome da marca?</strong><br>
+                    R: Não! O sistema reconhece variações como "NH", "New Holland", "newholland", etc.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>P: Minha marca não está na lista. O sistema funciona?</strong><br>
+                    R: Sim! O sistema foi desenvolvido para funcionar com qualquer marca de trator. Simplesmente digite a marca, modelo e descreva o problema.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>P: Os vídeos e manuais são sempre relevantes?</strong><br>
+                    R: Sim! O sistema seleciona automaticamente recursos relacionados ao tipo de problema identificado. Quanto mais específica sua descrição, melhor o resultado.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>P: Posso confiar 100% no diagnóstico?</strong><br>
+                    R: O sistema oferece orientações técnicas baseadas em conhecimento agrícola consolidado. Para problemas complexos, sempre consulte um mecânico especializado.</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-tips">
+                <div class="result-card">
+                    <h3>💡 Dicas de Manutenção Preventiva</h3>
+                    <ul>
+                        <li><strong>Verificação Diária:</strong> Sempre verifique o nível de óleo, água do radiador e combustível antes de operar.</li>
+                        <li><strong>Troca de Óleo:</strong> Faça a troca a cada 250 horas de operação ou conforme o manual do fabricante.</li>
+                        <li><strong>Filtros:</strong> Limpe ou troque os filtros de ar e combustível regularmente, especialmente em ambientes poeirentos.</li>
+                        <li><strong>Sistema Hidráulico:</strong> Verifique o nível de óleo hidráulico e troque os filtros a cada 500 horas.</li>
+                        <li><strong>Pneus:</strong> Mantenha a pressão correta e inspecione quanto a desgaste ou danos.</li>
+                        <li><strong>Bateria:</strong> Limpe os terminais e verifique a carga regularmente, especialmente antes da entressafra.</li>
+                        <li><strong>Armazenamento:</strong> Se o trator ficar parado por muito tempo, desligue a bateria e cubra o radiador.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>TratorTech Pro</h4>
+                <p>Sistema inteligente de diagnóstico para tratores e máquinas agrícolas. Informação técnica de qualidade para agricultores e mecânicos.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Marcas Cobertas</h4>
+                <p>New Holland, John Deere, Massey Ferguson, Case IH, Kubota, Fendt, Valtra, Yanmar, LS Tractor, Solis, Mahindra, Agrale, Landini, McCormick, Deutz-Fahr, Kioti, TYM, Bobcat, Ford, Valmet e muitas outras.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Recursos</h4>
+                <a href="#" onclick="document.getElementById('searchForm').scrollIntoView({behavior:'smooth'})">Diagnóstico Rápido</a>
+                <a href="#" onclick="switchTab('faq')">Perguntas Frequentes</a>
+                <a href="#" onclick="switchTab('tips')">Dicas de Manutenção</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TratorTech Pro — Sistema de Diagnóstico Inteligente. Todos os direitos reservados.</p>
+            <p style="margin-top: 0.5rem;">⚠️ Aviso: Este sistema é informativo. Sempre consulte um mecânico especializado para manutenções complexas.</p>
+        </div>
+    </footer>
+
+    <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
